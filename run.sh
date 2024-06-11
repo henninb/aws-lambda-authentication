@@ -15,8 +15,6 @@ npm install
 zip -r ../login.zip index.js node_modules/
 cd -
 
-exit 0
-
 if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
   echo "Lambda function exists. Proceeding to update code..."
   aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://login.zip
