@@ -3,6 +3,45 @@
 # aws apigateway get-rest-apis
 # aws apigateway get-rest-api --rest-api-id ybomoih66b
 # aws apigateway create-rest-api --name api-login-test --description "API for login functionality"  --endpoint-configuration types=REGIONAL
+FUNCTION_NAME=login-function
+ROLE_NAME="login-role"
+
+aws iam create-role --role-name $ROLE_NAME --assume-role-policy-document file://$HOME/tmp/edge-lambda-role.json
+ROLE_ARN=$(aws iam get-role --role-name $ROLE_NAME --query 'Role.Arn' --output text)
+
+rm -f login.zip
+cd ./login-function
+npm install
+zip -r ../login.zip index.js node_modules/
+cd -
+
+exit 0
+
+if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
+  echo "Lambda function exists. Proceeding to update code..."
+  aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://login.zip
+else
+  echo "Lambda function does not exist so create one."
+   STATUS="Pending"
+  while [ "$STATUS" != "Active" ]; do
+  aws lambda create-function --function-name $FUNCTION_NAME \
+  --runtime nodejs20.x \
+  --role "$ROLE_ARN" \
+  --handler index.handler \
+  --zip-file fileb://login.zip \
+  --region us-east-1
+    sleep 5
+    STATUS=$(aws lambda get-function --function-name $FUNCTION_NAME | jq -r '.Configuration.State')
+    echo "Creation status: $STATUS"
+
+    if [ "$STATUS" = "Failed" ]; then
+      echo "Lambda function creation failed."
+      exit 1
+    fi
+  done
+fi
+
+exit 1
 
 # Step 1: Create the API
 API_ID=$(aws apigateway create-rest-api \
@@ -48,5 +87,7 @@ aws lambda add-permission \
     --action lambda:InvokeFunction \
     --principal apigateway.amazonaws.com \
     --source-arn "arn:aws:execute-api:{region}:{account-id}:$API_ID/*/POST/api-login"
+
+curl -X POST 'https://api.bhenning.com/api-login' -d '{"email": "henninb@gmail.com", "password": "monday1"}'
 
 exit 0
