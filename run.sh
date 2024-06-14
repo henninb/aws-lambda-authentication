@@ -86,7 +86,7 @@ aws apigateway put-integration \
     --http-method POST \
     --type AWS_PROXY \
     --integration-http-method POST \
-    --uri "arn:aws:apigateway:$REGION:lambda:path/2015-03-31/functions/arn:aws:lambda:$REGION:$ACCOUNT_ID:function:api-login/invocations"
+    --uri "arn:aws:apigateway:$REGION:lambda:path/2015-03-31/functions/arn:aws:lambda:$REGION:$ACCOUNT_ID:function:$FUNCTION_NAME/invocations"
 check_status "Failed to set up the Integration with the Lambda Function"
 
 # Step 6: Grant API Gateway Permission to Invoke the Lambda Function
