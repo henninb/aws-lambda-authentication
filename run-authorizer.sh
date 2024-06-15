@@ -238,4 +238,8 @@ curl -X POST "$API_URL" -H "Authorization: your-auth-token" -d '{"email": "henni
 curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2"  -d '{"email": "henninb@gmail.com", "password": "monday1"}'
 curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" -H 'Authorization: your-auth-token' -d '{"email": "henninb@gmail.com", "password": "monday1"}' --user-agent "PhantomJS/123"
 
+curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" \
+--user-agent "PhantomJS/123" \
+-d '{"email": "henninb@gmail.com", "password": "monday1"}'
+
 exit 0
