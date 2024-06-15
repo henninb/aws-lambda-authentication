@@ -1,4 +1,5 @@
-exports.handler = async (event) => {
+const handler = async (event) => {
+// exports.handler = async (event) => {
   // Parse the incoming event body
   const body = JSON.parse(event.body);
 
@@ -34,3 +35,5 @@ exports.handler = async (event) => {
 
   return response;
 };
+
+module.exports = { handler };
