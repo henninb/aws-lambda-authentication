@@ -43,13 +43,15 @@ rm -f login.zip
 cd ./login-function
 npm install
 zip -r ../login.zip index.js node_modules/
-cd -
+cd ..
+pwd
 
 rm -f authorizer.zip
 cd ./authorizer-function
 npm install
 zip -r ../authorizer.zip index.js node_modules/
-cd -
+cd ..
+pwd
 
 if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
   echo "Lambda function exists. Proceeding to update code..."
@@ -75,9 +77,27 @@ else
   done
 fi
 
+echo "Publishing the Lambda function '$FUNCTION_NAME'..."
+while true; do
+  PUBLISH_OUTPUT=$(aws lambda publish-version --function-name $FUNCTION_NAME 2>&1)
+  if echo "$PUBLISH_OUTPUT" | grep -q "ResourceConflictException"; then
+    echo "Resource conflict detected. Retrying..."
+    sleep 5
+  else
+    break
+  fi
+done
+
+VERSION=$(echo $PUBLISH_OUTPUT | jq -r '.Version')
+
+if [ -z "$PUBLISH_OUTPUT" ]; then
+  echo "Failed to publish the Lambda function '$FUNCTION_NAME'."
+  exit 1
+fi
+
 if aws lambda get-function --function-name $AUTHORIZER_FUNCTION_NAME 2>/dev/null; then
   echo "Lambda function exists. Proceeding to update code..."
-  aws lambda update-function-code --function-name $AUTHORIZER_FUNCTION_NAME --zip-file fileb://login.zip
+  aws lambda update-function-code --function-name $AUTHORIZER_FUNCTION_NAME --zip-file fileb://authorizer.zip
 else
   echo "Lambda function does not exist. Creating..."
   STATUS="Pending"
@@ -99,6 +119,23 @@ else
   done
 fi
 
+echo "Publishing the Lambda function '$AUTHORIZER_FUNCTION_NAME'..."
+while true; do
+  PUBLISH_OUTPUT=$(aws lambda publish-version --function-name $AUTHORIZER_FUNCTION_NAME 2>&1)
+  if echo "$PUBLISH_OUTPUT" | grep -q "ResourceConflictException"; then
+    echo "Resource conflict detected. Retrying..."
+    sleep 5
+  else
+    break
+  fi
+done
+
+VERSION=$(echo $PUBLISH_OUTPUT | jq -r '.Version')
+
+if [ -z "$PUBLISH_OUTPUT" ]; then
+  echo "Failed to publish the Lambda function '$FUNCTION_NAME'."
+  exit 1
+fi
 # Step 3: Create the API
 API_ID=$(aws apigateway create-rest-api \
     --name api-login2 \
