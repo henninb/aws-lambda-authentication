@@ -232,14 +232,13 @@ check_status "Failed to deploy the API"
 
 # Step 12: Call the API
 API_URL="https://${API_ID}.execute-api.$REGION.amazonaws.com/${STAGE_NAME}/api-login2"
-echo curl -X POST "$API_URL" -H "Authorization: your-auth-token" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
-curl -X POST "$API_URL" -H "Authorization: your-auth-token" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
+echo curl -X POST "$API_URL" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
+curl -X POST "$API_URL" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
 
-curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2"  -d '{"email": "henninb@gmail.com", "password": "monday1"}'
-curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" -H 'Authorization: your-auth-token' -d '{"email": "henninb@gmail.com", "password": "monday1"}' --user-agent "PhantomJS/123"
+# curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2"  -d '{"email": "henninb@gmail.com", "password": "monday1"}'
+# curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" -H 'Authorization: your-auth-token' -d '{"email": "henninb@gmail.com", "password": "monday1"}' --user-agent "PhantomJS/123"
 
-curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" \
---user-agent "PhantomJS/123" \
--d '{"email": "henninb@gmail.com", "password": "monday1"}'
+echo curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" --user-agent "PhantomJS/123" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
+curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" --user-agent "PhantomJS/123" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
 
 exit 0

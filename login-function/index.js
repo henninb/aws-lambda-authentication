@@ -26,10 +26,10 @@ const handler = async (event) => {
       body: JSON.stringify(jsonResponse),
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://cflare.bhenning.com',
+        'Access-Control-Allow-Origin': 'https://www.bhenning.com',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'x-brian': '3',
+        'x-brian': '4',
       },
     };
   } else {
