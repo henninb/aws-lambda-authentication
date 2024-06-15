@@ -43,15 +43,13 @@ rm -f login.zip
 cd ./login-function
 npm install
 zip -r ../login.zip index.js node_modules/
-cd ..
-pwd
+cd -
 
 rm -f authorizer.zip
 cd ./authorizer-function
 npm install
-zip -r ../authorizer.zip index.js node_modules/
-cd ..
-pwd
+zip -r ../authorizer.zip index.js config.js node_modules/
+cd -
 
 if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
   echo "Lambda function exists. Proceeding to update code..."
@@ -238,5 +236,6 @@ echo curl -X POST "$API_URL" -H "Authorization: your-auth-token" -d '{"email": "
 curl -X POST "$API_URL" -H "Authorization: your-auth-token" -d '{"email": "henninb@gmail.com", "password": "monday1"}'
 
 curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2"  -d '{"email": "henninb@gmail.com", "password": "monday1"}'
+curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-login2" -H 'Authorization: your-auth-token' -d '{"email": "henninb@gmail.com", "password": "monday1"}' --user-agent "PhantomJS/123"
 
 exit 0
