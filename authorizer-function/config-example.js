@@ -4,5 +4,6 @@ module.exports = {
   px_auth_token: "",
   px_module_mode: 'active_blocking',
   px_bypass_monitor_header: 'x-px-block',
-  px_js_ref: "https://henninb.github.io/human-challenge/human-challenge.js"
+  px_js_ref: "https://henninb.github.io/human-challenge/human-challenge.js",
+  px_filter_by_http_method: ['OPTIONS'],
 };
