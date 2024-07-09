@@ -3,3 +3,5 @@ node_modules/
 authorizer.zip
 config.js
 lead.zip
+dist/
+index.js

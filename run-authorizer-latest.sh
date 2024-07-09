@@ -49,7 +49,8 @@ cd -
 rm -f authorizer.zip
 cd ./authorizer-function
 npm install
-zip -r ../authorizer.zip index.js config.js node_modules/
+esbuild ./index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js
+zip -r ../authorizer.zip dist/index.js node_modules/
 cd -
 
 if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
