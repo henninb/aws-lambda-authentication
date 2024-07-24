@@ -137,6 +137,10 @@ if [ -z "$PUBLISH_OUTPUT" ]; then
   echo "Failed to publish the Lambda function '$FUNCTION_NAME'."
   exit 1
 fi
+
+
+# exit 1
+
 # Step 3: Create the API
 API_ID=$(aws apigateway create-rest-api \
     --name api-lead \
