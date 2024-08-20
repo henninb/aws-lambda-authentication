@@ -12,7 +12,8 @@
     "CloudFront-Forwarded-Proto": "https",
     "CloudFront-Is-Tablet-Viewer": "false",
     "CloudFront-Is-Mobile-Viewer": "false",
-    "User-Agent": "PhantomJS/brian"
+    "User-Agent": "PhantomJS/brian",
+    "x-px-block": "1"
   },
   "queryStringParameters": {
     "QueryString1": "queryValue1"

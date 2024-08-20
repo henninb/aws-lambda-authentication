@@ -9,6 +9,7 @@
         "lambda:UpdateFunctionCode",
         "lambda:UpdateFunctionConfiguration",
         "lambda:AddPermission",
+        "lambda:InvokeFunction",
         "lambda:PublishVersion",
         "lambda:DeleteFunction"
       ],
