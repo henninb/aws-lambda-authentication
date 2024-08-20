@@ -302,6 +302,7 @@ echo
 
 echo curl -i -X POST "\"https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead\" --user-agent \"PhantomJS/brian123\" -d '{ \"vin\": \"1HGCM82633A123456\", \"color\": \"red\", \"name\": \"John Doe\", \"email\": \"john.doe@example.com\" }' -H 'x-px-block: 1'"
 
+echo
 curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead" --user-agent "PhantomJS/brian123" -d '{ "vin": "1HGCM82633A123456", "color": "red", "name": "John Doe", "email": "john.doe@example.com" }' -H 'x-px-block: 1'
 
 
