@@ -27,7 +27,7 @@ const handler = async (event) => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "https://pages.bhenning.com",
-      "Access-Control-Allow-Headers": "Content-Type,x-px-cookies",
+      "Access-Control-Allow-Headers": "Content-Type,x-px-cookies,x-px-block",
       "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
     },
     body: JSON.stringify({
