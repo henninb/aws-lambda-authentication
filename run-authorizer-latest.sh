@@ -298,14 +298,14 @@ curl -X POST "$API_URL" -d '{ "vin": "1HGCM82633A123456", "color": "red", "name"
 
 # curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead"  -d '{"email": "henninb@gmail.com", "password": "monday1"}'
 # curl -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead" -H 'Authorization: your-auth-token' -d '{"email": "henninb@gmail.com", "password": "monday1"}' --user-agent "PhantomJS/123"
+echo
 
-echo curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead" --user-agent "PhantomJS/123" -d '{ "vin": "1HGCM82633A123456", "color": "red", "name": "John Doe", "email": "john.doe@example.com" }'
-curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead" --user-agent "PhantomJS/brian123" -d '{ "vin": "1HGCM82633A123456", "color": "red", "name": "John Doe", "email": "john.doe@example.com" }'
+echo curl -i -X POST "\"https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead\" --user-agent \"PhantomJS/brian123\" -d '{ \"vin\": \"1HGCM82633A123456\", \"color\": \"red\", \"name\": \"John Doe\", \"email\": \"john.doe@example.com\" }' -H 'x-px-block: 1'"
+
+curl -i -X POST "https://${API_ID}.execute-api.us-east-1.amazonaws.com/prod/api-lead" --user-agent "PhantomJS/brian123" -d '{ "vin": "1HGCM82633A123456", "color": "red", "name": "John Doe", "email": "john.doe@example.com" }' -H 'x-px-block: 1'
 
 
 echo notabot
-curl -X POST "https://${API_ID}.execute-api.$REGION.amazonaws.com/$STAGE_NAME/api-lead" \
--H "Content-Type: application/json" \
--d '{ "vin": "1HGCM82633A123456", "color": "red", "name": "John Doe", "email": "john.doe@example.com" }'
+curl -X POST "https://${API_ID}.execute-api.$REGION.amazonaws.com/$STAGE_NAME/api-lead" -H "Content-Type: application/json" -d '{ "vin": "1HGCM82633A123456", "color": "red", "name": "John Doe", "email": "john.doe@example.com" }'
 
 exit 0
